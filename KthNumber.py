@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 import plotly
 import plotly.graph_objs as go
@@ -6,7 +8,7 @@ import plotly.plotly as py
 array = np.random.randint(-10000, 10000, size=1000)
 K = np.random.randint(1, 1000, size=1)[0]
 x = range(1000)
-trace = go.Scatter(x=x, y=array, mode='markers', marker = dict(size = 8,))
+trace = go.Scatter(x=x, y=array, mode='markers', marker = dict(size = 8), name='array')
 data = [trace]
 
 Guesses = []
@@ -52,7 +54,12 @@ guessPointsy.append(result)
 
 guessPoints = go.Scatter(
   x = guessPointsx,
-  y = guessPointsy
+  y = guessPointsy,
+  mode='lines+markers',
+  name='guess process',
+  marker = dict(
+    color='red'
+  )
 )
 
 data.append(guessPoints)
