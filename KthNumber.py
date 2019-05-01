@@ -12,6 +12,7 @@ trace = go.Scatter(x=x, y=array, mode='markers', marker = dict(size = 8), name='
 data = [trace]
 
 Guesses = []
+GuessesContext = []
 
 def getKth(array, K, Max, Min, size) :
   if K == 1:
@@ -19,7 +20,8 @@ def getKth(array, K, Max, Min, size) :
   k = K
   G = (Max - (Max - Min) * (k - 1.0) / (size - 1))
   Guesses.append(G)
-  print('Max:' + str(Max) + " Min:" + str(Min) + " size: " + str(size) + " G:" + str(G) + " K:" + str(K))
+  GuessesContext.append((Max, Min, k, G))
+  print('Max:' + str(Max) + " Min:" + str(Min) + " size: " + str(size) + " G:" + str(G) + " K:" + str(k))
 
   GUB = Max
   GLB = Min
@@ -58,9 +60,24 @@ guessPoints = go.Scatter(
   mode='lines+markers',
   name='guess process',
   marker = dict(
-    color='red'
+    color='red',
+    size=12
   )
 )
+
+contextX = 0
+for context in GuessesContext:
+  trace = go.Scatter(
+    y = [context[0], context[1]],
+    x = [contextX, contextX],
+    name = 'Max:' + str(context[0]) + ', Min:' + str(context[1]) + ', K:' + str(context[2]) + ', G:' + str(context[3]),
+    marker = dict(
+    color='blue',
+    size=12
+    )
+  )
+  data.append(trace)
+  contextX = contextX + inter
 
 data.append(guessPoints)
 
