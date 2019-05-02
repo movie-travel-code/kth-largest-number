@@ -6,9 +6,10 @@ import plotly.graph_objs as go
 import plotly.plotly as py
 
 array = np.random.randint(-10000, 10000, size=1000)
+array.sort()
 K = np.random.randint(1, 1000, size=1)[0]
 x = range(1000)
-trace = go.Scatter(x=x, y=array, mode='markers', marker = dict(size = 8), name='point')
+trace = go.Scatter(x=x, y=array, mode='markers', marker = dict(size = 3), name='point')
 data = [trace]
 
 Guesses = []
@@ -48,28 +49,42 @@ def getKth(array, K, Max, Min, size) :
     return getKth(array, k, GLB, Min, size - (K - k))
 
 result = getKth(array, K, np.max(array), np.min(array), 1000)
-inter = 1000 / len(Guesses)
-guessPointsy = Guesses
-guessPointsx = range(0, 1000, inter)
 
-guessPointsy.append(result)
-
-guessPoints = go.Scatter(
-  x = guessPointsx,
-  y = guessPointsy,
-  mode='lines+markers',
-  name='guess process',
-  marker = dict(
-    color='red',
-    size=12
+GuessX = []
+GuessY = []
+for C in GuessesContext:
+  point = go.Scatter(
+    y = (C[4],C[4]),
+    x = (1000 - K + 1, 1000 - K + 1),
+    mode='markers',
+    marker = dict(
+      color='red',
+      size=12
+    ),
+    name="guess value"
   )
-)
+  data.append(point)
+
+# GuessY.append(result)
+# GuessX.append(GuessesContext[len(GuessesContext) - 1])
+
+# guesspoints = go.Scatter(
+#   y = GuessY,
+#   x = GuessX,
+#   mode='markers',
+#   marker = dict(
+#   color='red',
+#   size=12
+#   )
+# )
+
+# data.append(guesspoints)
 
 contextX = 0
 for context in GuessesContext:
   trace = go.Scatter(
     y = [context[0], context[1]],
-    x = [contextX, contextX],
+    x = [1000 - K + 1, 1000 - K + 1],
     name = 'Max:' + str(context[0]) + ', Min:' + str(context[1]) + ', size:' + str(context[2]) + ', K:' + str(context[3]) + ', G:' + str(round(context[4], 2)),
     marker = dict(
     color='blue',
@@ -77,9 +92,6 @@ for context in GuessesContext:
     )
   )
   data.append(trace)
-  contextX = contextX + inter
-
-data.append(guessPoints)
 
 layout = go.Layout(
   title = dict (
