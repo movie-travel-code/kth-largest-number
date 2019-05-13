@@ -8,7 +8,7 @@ import plotly.plotly as py
 array = np.random.randint(-10000, 10000, size=1000)
 array.sort()
 K = np.random.randint(1, 1000, size=1)[0]
-x = range(1000)
+x = np.arange(1000)
 trace = go.Scatter(x=x, y=array, mode='markers', marker = dict(size = 3), name='point')
 data = [trace]
 
@@ -65,21 +65,6 @@ for C in GuessesContext:
   )
   data.append(point)
 
-# GuessY.append(result)
-# GuessX.append(GuessesContext[len(GuessesContext) - 1])
-
-# guesspoints = go.Scatter(
-#   y = GuessY,
-#   x = GuessX,
-#   mode='markers',
-#   marker = dict(
-#   color='red',
-#   size=12
-#   )
-# )
-
-# data.append(guesspoints)
-
 contextX = 0
 for context in GuessesContext:
   trace = go.Scatter(
@@ -108,4 +93,4 @@ layout = go.Layout(
 )
 
 fig = go.Figure(data=data, layout=layout)
-plotly.offline.plot(fig, filename='The Kth number.html')
+plotly.offline.plot(fig, filename='The Kth number sort.html')

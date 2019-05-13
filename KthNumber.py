@@ -7,7 +7,7 @@ import plotly.plotly as py
 
 array = np.random.randint(-10000, 10000, size=1000)
 K = np.random.randint(1, 1000, size=1)[0]
-x = range(1000)
+x = np.arange(1000)
 trace = go.Scatter(x=x, y=array, mode='markers', marker = dict(size = 8), name='point')
 data = [trace]
 
@@ -50,7 +50,7 @@ def getKth(array, K, Max, Min, size) :
 result = getKth(array, K, np.max(array), np.min(array), 1000)
 inter = 1000 / len(Guesses)
 guessPointsy = Guesses
-guessPointsx = range(0, 1000, inter)
+guessPointsx = np.arange(0, 1000, int(inter))
 
 guessPointsy.append(result)
 
